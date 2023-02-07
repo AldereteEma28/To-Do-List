@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-do list</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/4bcd6e86c9.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container m-5 p-2 rounded mx-auto bg-light shadow">
+        <!-- App title section -->
+        <div class="row m-1 p-4">
+            <div class="col">
+                <div class="p-1 h1 text-primary text-center mx-auto display-inline-block">
+                    <i class="fa fa-check bg-primary text-white rounded p-2"></i>
+                    <u>My To Do List</u>
+                </div>
+            </div>
+        </div>
+        <!-- Create todo section -->
+        <div class="row m-1 p-3">
+            <div class="col col-11 mx-auto">
+                <div class="row bg-white rounded shadow-sm p-2 add-todo-wrapper align-items-center justify-content-center">
+                    <div class="col">
+                        <input class="form-control form-control-lg border-0 add-todo-input bg-transparent rounded" type="text" placeholder="Add new ..">
+                    </div>
+                    
+                    <div class="col-auto px-0 mx-0 mr-2">
+                        <button type="button" class="btn btn-primary">Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="p-2 mx-4 border-black-25 border-bottom"></div>
+        
+        <!-- Todo list section -->
+        <div class="row mx-1 px-5 pb-3 w-80">
+            <div class="col mx-auto">
+                {% for task in tasks %}
+    <h2>{{task.task_name}}</h2>
+    <h4>{{task.task_desc}}</h4>
+    
+    <form method="PUT">
+        {% csrf_token %}
+        
+        {% if task.task_completed %}    
+        <input type="checkbox" id="checkbox-{{ task.id }}" checked="{{ task.task_completed }}" onchange="markComplete('{{task.id}}')">
+        {% else %}
+        <input type="checkbox" id="checkbox-{{ task.id }}"  onchange="markComplete('{{task.id}}')">
+        {% endif %}
+            
+    </form>
+    
+
+    <a href="{% url 'task:edit_tasks' task.id%}"><i class="fa-solid fa-pen-to-square fa-xl"></i></a>
+    <a href="{%url 'task:delete_tasks' task.id%}"><i class="fa-solid fa-trash fa-xl"></i></a>
+   
+    {% endfor %}
+    
+    {% block content %}
+        
+    {% endblock content %}
+            </div>
+        </div>
+    </div>
+<script src="{% static 'js/index.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+</body>
+</html>
