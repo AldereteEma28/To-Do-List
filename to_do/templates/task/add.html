@@ -1,9 +1,40 @@
-{% extends 'task/list.html' %}
-    {% block content %}
-         <form method="post">
+<div
+    class="modal fade"
+    id="createTaskModal"
+    tabindex="-1"
+    aria-labelledby="createTaskModalLabel"
+    aria-hidden="true"
+>
+<div class="modal-dialog">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h1 class="modal-title fs-5" id="createTaskModalLabel">Add Task</h1>
+        <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+        ></button>
+    </div>
+    <form action="{%url 'task:add_tasks'%}"  method="POST">
+    <div class="modal-body">
         {% csrf_token %}
-        {{form.as_p}}
-        <input type="submit" value="enviar">
+        <div class="mb-3">
+            <label class="form-label" for="id_task_name"></label>
+            <input class="form-control" placeholder="Task Title" type="text" name="task_name" maxlength="200" required id="id_task_name">
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="id_task_desc">Description:</label>
+            <textarea name="task_desc" class="form-control" placeholder="optional" rows="3" id="id_task_desc"></textarea>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <input type="submit" value="Crear" />
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+        Cancelar
+        </button>
+    </div>
     </form>
-    {% endblock content %}
-   
+    </div>
+</div>
+</div>

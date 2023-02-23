@@ -1,6 +1,5 @@
 import json
 from django.shortcuts import render, redirect
-from django.views.decorators.csrf import csrf_exempt
 from .models import Task
 from .forms import TaskForm
 
